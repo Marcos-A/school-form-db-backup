@@ -40,12 +40,12 @@ token=YOUR-DROPBOX-API-V2-TOKEN
 
 ### How to run
 From within the project's root folder, run:
-`python3 school_form_backuper.py`
+`python3 school_form_backuper.py`.
 The script will run until the process is interrupted.
 
 To execute the script in the background, from within the project's root folder run:
-`python3 school_form_backuper.py &`
+`python3 school_form_backuper.py &`.
 Get your process PID with:
-`jobs -l`
+`jobs -l`.
 Interrupt the process with:
-`kill YOUR-PROCESS-PID`
+`kill YOUR-PROCESS-PID`.
