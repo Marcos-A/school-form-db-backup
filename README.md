@@ -1,4 +1,4 @@
-# school-form-backuper
+# school-form-db-backuper
 Creates periodic logs of the school-form database in case a change is produced, and uploads them to a Dropbox folder.
 
 Designed as a helper to backup the results from: [https://github.com/Marcos-A/school-form](https://github.com/Marcos-A/school-form).
