@@ -26,8 +26,7 @@ def config_dbx(filename=os.path.join(os.getcwd(),'dropbox.ini'), section='dropbo
 
     if parser.has_section(section):
         params = parser.items(section)
-        for param in params:
-            token = param[1]
-            return token
+        token = params[0][1]
+        return token
     else:
         raise Exception('Section {0} not found in the {1} file'.format(section, filename))
