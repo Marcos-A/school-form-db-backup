@@ -27,7 +27,7 @@ port=YOUR-PORT
 options=-c search_path=dbo,YOUR-SCHEMA
 ```
 
-3. Get your Dropbox API v2 token from [https://www.dropbox.com/developers/documentation/http/overview](https://www.dropbox.com/developers/documentation/http/overview). Make sure it grants 'files.content.write' permissions. Set up your "dropbox.ini" file and place it in the project's root folder:
+3. Get your Dropbox API v2 token from [https://www.dropbox.com/developers/documentation/http/overview](https://www.dropbox.com/developers/documentation/http/overview). Make sure it grants 'files.metadata.read', 'files.metadata.write', 'files.content.read' and 'files.content.write' permissions. Set up your "dropbox.ini" file and place it in the project's root folder:
 
 ```
 [dropbox]
