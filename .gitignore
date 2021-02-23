@@ -33,9 +33,9 @@ __pycache__/
 database.ini
 database_elpuig.ini
 database_local.ini
+dropbox.ini
 last_logs/*
 log.csv
-dropbox_uploader\ copy.py
 
 # keep input folder
 !last_logs/.gitkeep 

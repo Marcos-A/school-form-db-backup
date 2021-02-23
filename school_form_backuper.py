@@ -3,8 +3,7 @@ from datetime import datetime
 import os
 import psycopg2
 from time import sleep
-
-from config import config
+from config import config_db
 from dropbox_uploader import upload_file
 
 
@@ -27,13 +26,13 @@ def get_last_log_record(dirname, log_filename):
 
                 return last_log_record_id
     else:
-        return 0
+        return None
 
 
 def get_last_db_record(sql_query):
     conn = None
     try:
-        params = config()
+        params = config_db()
 
         conn = psycopg2.connect(**params)
         cursor = conn.cursor()
@@ -55,7 +54,7 @@ def get_last_db_record(sql_query):
 def get_complete_db_records(sql_query):
     conn = None
     try:
-        params = config()
+        params = config_db()
 
         conn = psycopg2.connect(**params)
         cursor = conn.cursor()
@@ -101,15 +100,16 @@ if __name__ == '__main__':
         last_log_student_evaluation_id = get_last_log_record(os.path.join(os.getcwd(),'last_logs/'),
                                                             STUDENT_EVALUATION_LOG)
 
-        if int(last_db_student_evaluation_id) != int(last_log_student_evaluation_id):
+        if last_log_student_evaluation_id is None or int(last_db_student_evaluation_id) != int(last_log_student_evaluation_id):
             empty_folder(os.path.join(os.getcwd(), 'last_logs/'))
 
             evaluation_records = get_complete_db_records(EVALUATION_COMPLETE_RESULTS_QUERY)
             student_evaluation_records = get_complete_db_records(STUDENT_EVALUATION_COMPLETE_RESULTS_QUERY)
 
-            current_datetime = str(datetime.now().strftime("%Y%m%dT%H%M%S"))
-            evaluation_log = EVALUATION_LOG + current_datetime + '.csv'
-            student_evaluation_log = STUDENT_EVALUATION_LOG + current_datetime + '.csv'
+            current_datetime = datetime.now()
+            timestamp_for_filename = str(current_datetime.strftime("%Y%m%dT%H%M%S"))
+            evaluation_log = EVALUATION_LOG + timestamp_for_filename + '.csv'
+            student_evaluation_log = STUDENT_EVALUATION_LOG + timestamp_for_filename + '.csv'
 
             record_log(evaluation_records, 'last_logs/'+evaluation_log)
             record_log(student_evaluation_records, 'last_logs/'+student_evaluation_log)
@@ -121,8 +121,14 @@ if __name__ == '__main__':
                                                                                 'last_logs/',
                                                                                 student_evaluation_log))
 
-            timestamp = str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-            log_changes(EVENTS_CHECKER_LOG, timestamp, 'new logs')
+            timestamp_for_log = str(current_datetime.strftime("%Y-%m-%d %H:%M:%S"))
+            if last_log_student_evaluation_id is None:
+                log_changes(EVENTS_CHECKER_LOG, timestamp_for_log, 'first local logs created, ' +\
+                                                                   'new logs, ' +\
+                                                                   'uploaded logs not necessarily recorded ' +\
+                                                                   'real changes in the database')
+            else:
+                log_changes(EVENTS_CHECKER_LOG, timestamp_for_log, 'new logs')
 
         else:
             timestamp = str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))

@@ -1,15 +1,13 @@
 import sys
 import dropbox
 from dropbox.files import WriteMode
-from dropbox.exceptions import ApiError, AuthError
-import os
+from dropbox.exceptions import ApiError
+from config import config_dbx
 
-
-# Add your OAuth2 access token here
-TOKEN = ''
 
 def upload_file(backup_path, local_filename):
-    dbx = dropbox.Dropbox(TOKEN)
+    token = config_dbx()
+    dbx = dropbox.Dropbox(token)
 
     with open(local_filename, 'rb') as local_file:
         try:
