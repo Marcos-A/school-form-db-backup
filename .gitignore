@@ -34,9 +34,9 @@ database.ini
 database_elpuig.ini
 database_local.ini
 dropbox.ini
-last_logs/*
+last_db_logs/*
 log.csv
 
 # keep input folder
-!last_logs/.gitkeep 
+!last_db_logs/.gitkeep 
 
