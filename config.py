@@ -19,7 +19,7 @@ def config_db(filename=os.path.join(os.getcwd(),'database.ini'), section='postgr
     return db
 
 
-# Configure PostgreSQL Dropbox API v2 token
+# Configure Dropbox API v2 token
 def config_dbx(filename=os.path.join(os.getcwd(),'dropbox.ini'), section='dropbox'):
     parser = ConfigParser()
     parser.read(filename)
