@@ -29,6 +29,7 @@ def download_file(dropbox_path, local_file_path):
     dbx = dropbox.Dropbox(token)
     try:
         dbx.files_download_to_file(local_file_path, dropbox_path)
+    # Do nothing if Dropbox file doesn't exist
     except ApiError:
         pass
 
@@ -44,5 +45,6 @@ def get_list_of_files(dropbox_dir_path):
                         if isinstance(file, FileMetadata) and file.name is not None]
 
         return list_of_files
+    # Do nothing if Dropbox dir doesn't exist
     except ApiError:
         pass

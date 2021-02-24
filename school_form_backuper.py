@@ -98,7 +98,7 @@ def log_changes(log_filename, timestamp, message):
         log_writer.writerow([timestamp, message])
 
 
-def get_current_local_log_file(dirname, log_filename):
+def get_local_log_file(dirname, log_filename):
     if not os.listdir(dirname):
         return None
     else:
@@ -111,7 +111,7 @@ def get_current_local_log_file(dirname, log_filename):
 if __name__ == '__main__':
     while True:
         # Compare local student evaluation log file with latest student evaluation log files at Dropbox
-        student_evaluation_current_log_file = get_current_local_log_file('last_db_logs', STUDENT_EVALUATION_LOG)
+        student_evaluation_current_log_file = get_local_log_file('last_db_logs', STUDENT_EVALUATION_LOG)
         # Check if Dropbox student evaluation log file exists
         if get_list_of_files('/logs/studentevaluation'):
             student_evaluation_latest_backup_file = get_list_of_files('/logs/studentevaluation')[-1]
@@ -175,11 +175,11 @@ if __name__ == '__main__':
         else:
             # If Dropbox student evaluation log file doesn't exist, upload local database log files to Dropbox
             if not get_list_of_files('/logs/studentevaluation'):
-                evaluation_log = get_current_local_log_file('last_db_logs/', EVALUATION_LOG)
+                evaluation_log = get_local_log_file('last_db_logs/', EVALUATION_LOG)
                 upload_file('/logs/evaluation/'+evaluation_log, os.path.join(os.getcwd(),
                                                                         'last_db_logs/',
                                                                         evaluation_log))
-                student_evaluation_log = get_current_local_log_file('last_db_logs/', STUDENT_EVALUATION_LOG)
+                student_evaluation_log = get_local_log_file('last_db_logs/', STUDENT_EVALUATION_LOG)
                 upload_file('/logs/studentevaluation/'+student_evaluation_log, os.path.join(os.getcwd(),
                                                                                 'last_db_logs/',
                                                                                 student_evaluation_log))
